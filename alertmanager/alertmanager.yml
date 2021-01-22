@@ -1,0 +1,20 @@
+receivers:
+      - name: default-receiver
+      - name: prometheus-msteams
+        webhook_configs:
+        - url: "http://10.148.0.9:2021/devops_x_channel"
+          send_resolved: true
+      - name: prometheus-msteams_1
+        webhook_configs:
+        - url: "http://10.148.0.9:2021/office_x_channel"
+          send_resolved: true    
+    route:
+      group_by: ['alertname']
+      group_interval: 5m
+      repeat_interval: 15m
+      group_wait: 30s
+      receiver: 'prometheus-msteams'
+      routes:
+        - receiver: prometheus-msteams
+        - receiver: prometheus-msteams_1
+
